@@ -1,0 +1,10 @@
+[package]
+name = "cryptopals"
+version = "0.1.0"
+authors = ["Carlos Rodriguez <crodveg@yahoo.es>"]
+
+[[bin]]
+name = "challenge-1"
+path = "src/set-1-basics/1-convert-hex-to-base64/main.rs"
+
+[dependencies]
