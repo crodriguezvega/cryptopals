@@ -34,8 +34,7 @@ fn to_groups(input: &str) -> Vec<String> {
     let mut rest = input;
     while !rest.is_empty() {
         if rest.len() <= 6 {
-            let a = format!("{:0<width$}", rest, width = 6);
-            groups.push(a);
+            groups.push(format!("{:0<width$}", rest, width = 6));
             rest = "";
         } else {
             let (chunk, tail) = rest.split_at(6);
