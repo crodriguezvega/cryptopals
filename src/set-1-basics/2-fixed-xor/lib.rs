@@ -10,7 +10,7 @@ pub fn xor(a: &str, b: &str) -> Option<String> {
             .map(|(x, y)| x ^ y)
             .map(|x| number_to_hex(x))
             .collect::<Vec<String>>()
-            .join("");
+            .concat();
             
         Some(xor)
     }
