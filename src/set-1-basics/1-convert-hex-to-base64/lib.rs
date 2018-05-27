@@ -4,7 +4,7 @@ pub fn hex_to_base64(input: &str) -> Option<String> {
     } else {
         let bits = input.chars()
             .map(|hex| hex_to_number(&hex.to_string()))
-            .map(|number| to_binary(number))
+            .map(|number| number_to_binary(number))
             .fold(String::new(), |mut acc, ref x| {
                 acc.push_str(x);
                 acc
@@ -49,7 +49,7 @@ fn hex_to_number(input: &str) -> u8 {
     u8::from_str_radix(input, 16).unwrap()
 }
 
-fn to_binary(input: u8) -> String {
+fn number_to_binary(input: u8) -> String {
     format!("{:0width$b}", input, width = 4)
 }
 
