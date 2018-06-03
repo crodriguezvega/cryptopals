@@ -1,6 +1,8 @@
-pub fn xor(a: &str, b: &str) -> Option<String> {
-    if !(a.is_ascii() && b.is_ascii() && a.len() == b.len()) {
-        None
+pub fn xor(a: &str, b: &str) -> Result<String, &'static str> {
+    if !(a.is_ascii() && b.is_ascii()) {
+        Err("Input string(s) are not valid ASCII")
+    } else if a.len() != b.len() {
+        Err("Input strings are not the same length")
     } else {
         let a_numbers = to_numbers(a);
         let b_numbers = to_numbers(b);
@@ -10,9 +12,9 @@ pub fn xor(a: &str, b: &str) -> Option<String> {
             .map(|(x, y)| x ^ y)
             .map(|x| number_to_hex(x))
             .collect::<Vec<String>>()
-            .concat();
+          .concat();
             
-        Some(xor)
+        Ok(xor)
     }
 }
 

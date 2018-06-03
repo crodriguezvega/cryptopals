@@ -11,4 +11,8 @@ path = "src/set-1-basics/1-convert-hex-to-base64/main.rs"
 name = "challenge-2"
 path = "src/set-1-basics/2-fixed-xor/main.rs"
 
+[[bin]]
+name = "challenge-3"
+path = "src/set-1-basics/3-single-byte-xor-cipher/main.rs"
+
 [dependencies]

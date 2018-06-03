@@ -1,6 +1,6 @@
-pub fn hex_to_base64(input: &str) -> Option<String> {
+pub fn hex_to_base64(input: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {
-        None
+        Err("Input string is not valid ASCII")
     } else {
         let bits = input.chars()
             .map(|hex| hex_to_number(&hex.to_string()))
@@ -18,7 +18,7 @@ pub fn hex_to_base64(input: &str) -> Option<String> {
                 acc
             });
 
-        Some(base64)
+        Ok(base64)
     }
 }
 
