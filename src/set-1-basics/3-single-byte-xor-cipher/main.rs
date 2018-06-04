@@ -1,3 +1,5 @@
+extern crate common;
+
 mod lib;
 
 fn main() {

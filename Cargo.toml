@@ -15,4 +15,9 @@ path = "src/set-1-basics/2-fixed-xor/main.rs"
 name = "challenge-3"
 path = "src/set-1-basics/3-single-byte-xor-cipher/main.rs"
 
+[[bin]]
+name = "challenge-4"
+path = "src/set-1-basics/4-detect-single-character-xor/main.rs"
+
 [dependencies]
+common = { path = "src/common" }

@@ -1,0 +1,8 @@
+[package]
+name = "common"
+version = "0.1.0"
+authors = ["Carlos Rodriguez <crodveg@yahoo.es>"]
+
+[lib]
+name = "common"
+path = "src/lib.rs"

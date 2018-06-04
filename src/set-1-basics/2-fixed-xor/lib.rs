@@ -1,3 +1,5 @@
+use common::mappings;
+
 pub fn xor(a: &str, b: &str) -> Result<String, &'static str> {
     if !(a.is_ascii() && b.is_ascii()) {
         Err("Input string(s) are not valid ASCII")
@@ -10,7 +12,7 @@ pub fn xor(a: &str, b: &str) -> Result<String, &'static str> {
         let xor = a_numbers.iter()
             .zip(&b_numbers)
             .map(|(x, y)| x ^ y)
-            .map(|x| number_to_hex(x))
+            .map(|x| mappings::number_to_hex(x))
             .collect::<Vec<String>>()
           .concat();
             
@@ -20,14 +22,6 @@ pub fn xor(a: &str, b: &str) -> Result<String, &'static str> {
 
 fn to_numbers(input: &str) -> Vec<u8> {
     input.chars()
-        .map(|hex| hex_to_number(&hex.to_string()))
+        .map(|hex| mappings::hex_to_number(&hex.to_string()))
         .collect()
-}
-
-fn hex_to_number(input: &str) -> u8 {
-    u8::from_str_radix(input, 16).unwrap()
-}
-
-fn number_to_hex(input: u8) -> String {
-    format!("{:x?}", input)
 }

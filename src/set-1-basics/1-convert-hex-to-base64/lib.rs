@@ -1,17 +1,19 @@
+use common::mappings;
+
 pub fn hex_to_base64(input: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {
         Err("Input string is not valid ASCII")
     } else {
         let bits = input.chars()
-            .map(|hex| hex_to_number(&hex.to_string()))
-            .map(|number| number_to_binary(number))
+            .map(|hex| mappings::hex_to_number(&hex.to_string()))
+            .map(|number| mappings::number_to_binary(number))
             .fold(String::new(), |mut acc, ref x| {
                 acc.push_str(x);
                 acc
             });
         let bit_groups = to_groups(&bits);
         let base64 = bit_groups.iter()
-            .map(|ref bits| binary_to_number(bits))
+            .map(|ref bits| mappings::binary_to_number(bits))
             .map(|number| to_base64(number as usize))
             .fold(String::new(), |mut acc, x| {
                 acc.push(x);
@@ -43,18 +45,6 @@ fn to_groups(input: &str) -> Vec<String> {
         }
     }
     groups
-}
-
-fn hex_to_number(input: &str) -> u8 {
-    u8::from_str_radix(input, 16).unwrap()
-}
-
-fn number_to_binary(input: u8) -> String {
-    format!("{:0width$b}", input, width = 4)
-}
-
-fn binary_to_number(input: &str) -> u8 {
-    u8::from_str_radix(input, 2).unwrap()
 }
 
 fn to_base64(input: usize) -> char {
