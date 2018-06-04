@@ -1,23 +1,23 @@
 [package]
-name = "cryptopals"
+name = "cryptopals-set-1"
 version = "0.1.0"
 authors = ["Carlos Rodriguez <crodveg@yahoo.es>"]
 
 [[bin]]
 name = "challenge-1"
-path = "src/set-1-basics/1-convert-hex-to-base64/main.rs"
+path = "src/1-convert-hex-to-base64/main.rs"
 
 [[bin]]
 name = "challenge-2"
-path = "src/set-1-basics/2-fixed-xor/main.rs"
+path = "src/2-fixed-xor/main.rs"
 
 [[bin]]
 name = "challenge-3"
-path = "src/set-1-basics/3-single-byte-xor-cipher/main.rs"
+path = "src/3-single-byte-xor-cipher/main.rs"
 
 [[bin]]
 name = "challenge-4"
-path = "src/set-1-basics/4-detect-single-character-xor/main.rs"
+path = "src/4-detect-single-character-xor/main.rs"
 
 [dependencies]
 common = { path = "src/common" }
