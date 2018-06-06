@@ -1,12 +1,26 @@
 use std::collections::HashMap;
+use mappings;
 
-pub fn xor(input: &[u8], key: u8) -> Vec<char> {
+pub struct SingleCharacterXorDecrypt {
+    pub score: f32,
+    pub secret_message: String
+}
+
+pub fn try_single_character_xor_decrypt(input: &str) -> Vec<SingleCharacterXorDecrypt> {
+    let numbers = mappings::hex_string_to_numbers(input);
+
+    (0..=255).map(|ch| xor(&numbers, ch))
+        .map(|xor| mappings::chars_to_string(&xor))
+        .map(|msg| SingleCharacterXorDecrypt { score: score(&msg), secret_message: msg })
+        .collect()
+}
+fn xor(input: &[u8], key: u8) -> Vec<char> {
     input.iter()
         .map(|x| (x ^ key) as char)
         .collect()
 }
 
-pub fn score(input: &str) -> f32 {
+fn score(input: &str) -> f32 {
     let frequencies: HashMap<char, f32> =
         [
             ('a', 0.0651738),
