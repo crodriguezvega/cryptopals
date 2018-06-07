@@ -19,5 +19,9 @@ path = "src/3-single-byte-xor-cipher/main.rs"
 name = "challenge-4"
 path = "src/4-detect-single-character-xor/main.rs"
 
+[[bin]]
+name = "challenge-5"
+path = "src/5-implementing-repeating-key-xor/main.rs"
+
 [dependencies]
 common = { path = "src/common" }

@@ -1,19 +1,20 @@
 use std::collections::HashMap;
 use mappings;
 
-pub struct SingleCharacterXorDecrypt {
+pub struct SingleCharacterXorDecryption {
     pub score: f32,
     pub secret_message: String
 }
 
-pub fn try_single_character_xor_decrypt(input: &str) -> Vec<SingleCharacterXorDecrypt> {
-    let numbers = mappings::hex_string_to_numbers(input);
+pub fn try_decrypt_single_character_xor(input: &str) -> Vec<SingleCharacterXorDecryption> {
+    let bytes = mappings::hex_string_to_bytes(input);
 
-    (0..=255).map(|ch| xor(&numbers, ch))
+    (0..=255).map(|ch| xor(&bytes, ch))
         .map(|xor| mappings::chars_to_string(&xor))
-        .map(|msg| SingleCharacterXorDecrypt { score: score(&msg), secret_message: msg })
+        .map(|msg| SingleCharacterXorDecryption { score: score(&msg), secret_message: msg })
         .collect()
 }
+
 fn xor(input: &[u8], key: u8) -> Vec<char> {
     input.iter()
         .map(|x| (x ^ key) as char)

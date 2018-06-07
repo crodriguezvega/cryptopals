@@ -5,16 +5,16 @@ pub fn hex_to_base64(input: &str) -> Result<String, &'static str> {
         Err("Input string is not valid ASCII")
     } else {
         let bits = input.chars()
-            .map(|hex| mappings::hex_to_number(&hex.to_string()))
-            .map(|number| mappings::number_to_binary(number))
+            .map(|hex| mappings::hex_to_byte(&hex.to_string()))
+            .map(|byte| mappings::byte_to_binary(byte))
             .fold(String::new(), |mut acc, ref x| {
                 acc.push_str(x);
                 acc
             });
         let bit_groups = to_groups(&bits);
         let base64 = bit_groups.iter()
-            .map(|ref bits| mappings::binary_to_number(bits))
-            .map(|number| to_base64(number as usize))
+            .map(|ref bits| mappings::binary_to_byte(bits))
+            .map(|byte| to_base64(byte as usize))
             .fold(String::new(), |mut acc, x| {
                 acc.push(x);
                 acc

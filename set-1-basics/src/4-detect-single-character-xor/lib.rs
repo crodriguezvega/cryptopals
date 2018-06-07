@@ -11,7 +11,7 @@ pub fn decrypt(path: &Path) -> Result<String, &'static str> {
         let mut maximum_score = 0.0;
         let mut secret_message = String::new();
         read_lines(path).iter()
-            .flat_map(|line| xor_cipher::try_single_character_xor_decrypt(&line))
+            .flat_map(|line| xor_cipher::try_decrypt_single_character_xor(&line))
             .for_each(|res| {
                 if res.score > maximum_score {
                     maximum_score = res.score;
