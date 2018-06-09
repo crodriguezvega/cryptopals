@@ -7,18 +7,12 @@ pub fn hex_to_base64(input: &str) -> Result<String, &'static str> {
         let bits = input.chars()
             .map(|hex| mappings::hex_to_byte(&hex.to_string()))
             .map(|byte| mappings::byte_to_binary(byte))
-            .fold(String::new(), |mut acc, ref x| {
-                acc.push_str(x);
-                acc
-            });
+            .collect::<String>();
         let bit_groups = to_groups(&bits);
         let base64 = bit_groups.iter()
             .map(|ref bits| mappings::binary_to_byte(bits))
             .map(|byte| to_base64(byte as usize))
-            .fold(String::new(), |mut acc, x| {
-                acc.push(x);
-                acc
-            });
+            .collect::<String>();
 
         Ok(base64)
     }
