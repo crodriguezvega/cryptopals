@@ -1,4 +1,4 @@
-use common::xor_cipher;
+use common::{ mappings, xor_cipher };
 
 pub fn decrypt(input: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {
@@ -6,7 +6,9 @@ pub fn decrypt(input: &str) -> Result<String, &'static str> {
     } else {
         let mut maximum_score = 0.0;
         let mut secret_message = String::new();
-        xor_cipher::try_decrypt_single_character_xor(input).iter()
+
+        let bytes = mappings::hex_string_to_bytes(input);
+        xor_cipher::try_decrypt_single_character_xor(&bytes).iter()
             .for_each(|res| {
                 if res.score > maximum_score {
                     maximum_score = res.score;

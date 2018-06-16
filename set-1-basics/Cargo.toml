@@ -23,5 +23,10 @@ path = "src/4-detect-single-character-xor/main.rs"
 name = "challenge-5"
 path = "src/5-implementing-repeating-key-xor/main.rs"
 
+[[bin]]
+name = "challenge-6"
+path = "src/6-break-repeating-key-xor/main.rs"
+
 [dependencies]
+base64 = "~0.6.0"
 common = { path = "src/common" }
