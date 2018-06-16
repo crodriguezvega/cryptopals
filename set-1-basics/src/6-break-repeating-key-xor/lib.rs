@@ -54,7 +54,6 @@ fn calculate_key_length(cipher_text: &[u8]) -> usize {
     best_key_length
 }
 
-
 fn hamming_distance(a: &[u8], b: &[u8]) -> u32 {
     a.iter()
         .zip(b)
