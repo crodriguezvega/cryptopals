@@ -1,7 +1,7 @@
 use std::path::Path;
 use common::{ file, mappings, xor_cipher };
  
-pub fn decrypt(path: &Path) -> Result<String, &'static str> {
+pub fn break_encryption(path: &Path) -> Result<String, &'static str> {
     if !path.exists() {
         Err("File not found")
     } else {

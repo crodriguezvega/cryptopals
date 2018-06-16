@@ -3,30 +3,17 @@ use std::path::Path;
 use base64::decode;
 use common::{ file, xor_cipher };
 
-pub fn decrypt(path: &Path) -> Result<String, &'static str> {
+pub fn break_encryption(path: &Path) -> Result<String, &'static str> {
     if !path.exists() {
         Err("File not found")
     } else {
         let cipher_text = read_file(path);
-        let key_length = estimate_key_length(&cipher_text);
+        let key_length = calculate_key_length(&cipher_text);
         let blocks = transpose(&cipher_text, key_length);
+        let key = calculate_key(&blocks);
+        let plain_text = decrypt(&cipher_text, &key, key_length);
 
-        let key_chars: Vec<char> = blocks.iter()
-            .map(|block| {
-                calculate_single_character_key(&block)
-            })
-            .collect();
-
-        let mut plain_bytes = Vec::new();
-        cipher_text.iter()
-            .enumerate()
-            .for_each(|(i, cipher_byte)| {
-                let key_byte = key_chars[i % key_length] as u8;
-                let plain_byte = cipher_byte ^ key_byte;
-                plain_bytes.push(plain_byte)               
-            });
-
-        Ok(String::from_utf8(plain_bytes).unwrap())
+        Ok(String::from_utf8(plain_text).unwrap())
     }
 }
 
@@ -41,7 +28,7 @@ fn read_file(path: &Path) -> Vec<u8> {
     decode(&content).unwrap()
 }
 
-fn estimate_key_length(cipher_text: &[u8]) -> usize {
+fn calculate_key_length(cipher_text: &[u8]) -> usize {
     let mut best_key_length = 0;
     let mut minimum_distance = f32::INFINITY;
 
@@ -67,36 +54,6 @@ fn estimate_key_length(cipher_text: &[u8]) -> usize {
     best_key_length
 }
 
-fn transpose(input: &[u8], key_length: usize) -> Vec<Vec<u8>> {
-    let mut blocks = Vec::new();
-    for i in 0..key_length {
-        let mut block = Vec::new();    
-
-        let mut j = i;
-        while j < input.len() {
-            block.push(input[j]);
-            j += key_length;
-        }
-
-        blocks.push(block);
-    }
-    blocks
-}
-
-fn calculate_single_character_key(input: &[u8]) -> char {
-    let mut key = 'a';
-    let mut maximum_score = 0.0;
-
-    xor_cipher::try_decrypt_single_character_xor(input).iter()
-        .for_each(|res| {
-            if res.score > maximum_score {
-                key = res.key;
-                maximum_score = res.score;
-            }
-        });
-
-    key
-}
 
 fn hamming_distance(a: &[u8], b: &[u8]) -> u32 {
     a.iter()
@@ -112,4 +69,56 @@ fn hamming_distance(a: &[u8], b: &[u8]) -> u32 {
             }
             distance + delta
         })        
+}
+
+fn transpose(input: &[u8], key_length: usize) -> Vec<Vec<u8>> {
+    let mut blocks = Vec::new();
+    for i in 0..key_length {
+        let mut block = Vec::new();    
+
+        let mut j = i;
+        while j < input.len() {
+            block.push(input[j]);
+            j += key_length;
+        }
+
+        blocks.push(block);
+    }
+
+    blocks
+}
+
+fn calculate_key(blocks: &[Vec<u8>]) -> Vec<u8> {
+    blocks.iter()
+        .map(|block| {
+            calculate_single_character_key(&block)
+        })
+        .collect()
+}
+
+fn calculate_single_character_key(input: &[u8]) -> u8 {
+    let mut key = 'a';
+    let mut maximum_score = 0.0;
+    xor_cipher::try_decrypt_single_character_xor(input).iter()
+        .for_each(|res| {
+            if res.score > maximum_score {
+                key = res.key;
+                maximum_score = res.score;
+            }
+        });
+
+    key as u8
+}
+
+fn decrypt(cipher_text: &[u8], key: &[u8], key_length: usize) -> Vec<u8> {
+    let mut plain_bytes = Vec::new();
+    cipher_text.iter()
+        .enumerate()
+        .for_each(|(i, cipher_byte)| {
+            let key_byte = key[i % key_length];
+            let plain_byte = cipher_byte ^ key_byte;
+            plain_bytes.push(plain_byte)               
+        });
+
+    plain_bytes
 }

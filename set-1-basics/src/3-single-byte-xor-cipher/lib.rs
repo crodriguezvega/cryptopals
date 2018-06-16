@@ -1,6 +1,6 @@
 use common::{ mappings, xor_cipher };
 
-pub fn decrypt(input: &str) -> Result<String, &'static str> {
+pub fn break_encryption(input: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {
         Err("Input string is not valid ASCII")
     } else {

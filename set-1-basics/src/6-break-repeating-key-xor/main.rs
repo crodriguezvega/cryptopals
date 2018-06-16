@@ -6,7 +6,7 @@ mod lib;
 
 fn main() {
     let path = Path::new("./src/6-break-repeating-key-xor/6.txt");
-    match lib::decrypt(path) {
+    match lib::break_encryption(path) {
         Err(error) => println!("{}", error),
         Ok(cipher_text) => println!("{}", cipher_text)
     };
