@@ -31,6 +31,11 @@ path = "src/6-break-repeating-key-xor/main.rs"
 name = "challenge-7"
 path = "src/7-aes-in-ecb-mode/main.rs"
 
+[[bin]]
+name = "challenge-8"
+path = "src/8-detect-aes-in-ecb-mode/main.rs"
+
 [dependencies]
 rust-crypto = "^0.2"
+itertools = "0.7.3"
 common = { path = "src/common" }
