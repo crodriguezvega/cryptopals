@@ -1,4 +1,3 @@
-extern crate base64;
 extern crate common;
 
 use std::path::Path;

@@ -1,31 +1,22 @@
 use std::f32;
 use std::path::Path;
-use base64::decode;
 use common::{ file, xor_cipher };
 
 pub fn break_encryption(path: &Path) -> Result<String, &'static str> {
     if !path.exists() {
         Err("File not found")
     } else {
-        let cipher_text = read_file(path);
+        let cipher_text = file::read_file(path);
         let key_length = calculate_key_length(&cipher_text);
         let blocks = transpose(&cipher_text, key_length);
         let key = calculate_key(&blocks);
         let plain_text = decrypt(&cipher_text, &key, key_length);
 
-        Ok(String::from_utf8(plain_text).unwrap())
+        match String::from_utf8(plain_text) {
+            Err(_) => Err("Plain text is not valid UTF8"),
+            Ok(plain_text) => Ok(plain_text)
+        }
     }
-}
-
-fn read_file(path: &Path) -> Vec<u8> {
-    let content = file::read_lines(path)
-        .iter()
-        .fold(String::new(), |mut content, ref line| {
-            content.push_str(line);
-            content
-        });
-    
-    decode(&content).unwrap()
 }
 
 fn calculate_key_length(cipher_text: &[u8]) -> usize {
