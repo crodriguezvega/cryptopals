@@ -1,4 +1,4 @@
-use common::mappings;
+use shared::mappings;
 
 pub fn xor(a: &str, b: &str) -> Result<String, &'static str> {
     if !(a.is_ascii() && b.is_ascii()) {

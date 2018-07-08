@@ -1,4 +1,4 @@
-use common::{ mappings, xor_cipher };
+use shared::{ mappings, xor_cipher };
 
 pub fn break_encryption(input: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {

@@ -11,7 +11,7 @@ pub fn read_file(path: &Path) -> Vec<u8> {
             content.push_str(line);
             content
         });
-    
+  
     match decode(&content) {
         Err(_) => Vec::new(),
         Ok(content) => content 

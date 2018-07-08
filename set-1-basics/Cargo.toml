@@ -38,4 +38,4 @@ path = "src/8-detect-aes-in-ecb-mode/main.rs"
 [dependencies]
 rust-crypto = "^0.2"
 itertools = "0.7.3"
-common = { path = "src/common" }
+shared = { path = "../shared" }

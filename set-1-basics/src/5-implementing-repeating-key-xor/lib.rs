@@ -1,4 +1,4 @@
-use common::mappings;
+use shared::mappings;
 
 pub fn encrypt(input: &str, key: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {

@@ -1,4 +1,4 @@
-extern crate common;
+extern crate shared;
 
 mod lib;
 

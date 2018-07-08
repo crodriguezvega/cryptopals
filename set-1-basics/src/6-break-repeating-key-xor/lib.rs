@@ -1,21 +1,15 @@
 use std::f32;
-use std::path::Path;
-use common::{ file, xor_cipher };
+use shared::xor_cipher;
 
-pub fn break_encryption(path: &Path) -> Result<String, &'static str> {
-    if !path.exists() {
-        Err("File not found")
-    } else {
-        let cipher_text = file::read_file(path);
-        let key_length = calculate_key_length(&cipher_text);
-        let blocks = transpose(&cipher_text, key_length);
-        let key = calculate_key(&blocks);
-        let plain_text = decrypt(&cipher_text, &key, key_length);
+pub fn break_encryption(cipher_text: &[u8]) -> Result<String, &'static str> {
+    let key_length = calculate_key_length(&cipher_text);
+    let blocks = transpose(&cipher_text, key_length);
+    let key = calculate_key(&blocks);
+    let plain_text = decrypt(&cipher_text, &key, key_length);
 
-        match String::from_utf8(plain_text) {
-            Err(_) => Err("Plain text is not valid UTF8"),
-            Ok(plain_text) => Ok(plain_text)
-        }
+    match String::from_utf8(plain_text) {
+        Err(_) => Err("Plain text is not valid UTF8"),
+        Ok(plain_text) => Ok(plain_text)
     }
 }
 

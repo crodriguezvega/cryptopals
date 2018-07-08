@@ -1,4 +1,4 @@
-use common::mappings;
+use shared::mappings;
 
 pub fn hex_to_base64(input: &str) -> Result<String, &'static str> {
     if !input.is_ascii() {

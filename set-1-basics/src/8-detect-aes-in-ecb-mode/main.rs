@@ -1,13 +1,17 @@
 extern crate itertools;
-extern crate common;
+extern crate shared;
 
 use std::path::Path;
+use shared::file;
 mod lib;
 
 fn main() {
     let path = Path::new("./src/8-detect-aes-in-ecb-mode/8.txt");
-    match lib::detect(path) {
-        Err(error) => println!("{}", error),
-        Ok(cipher_text) => println!("{}", cipher_text)
-    };
+    if !path.exists() {
+        println!("File not found")
+    } else {
+        let lines = file::read_lines(path);
+        let cipher_text = lib::detect(&lines);
+        println!("{}", cipher_text);
+    }
 }
