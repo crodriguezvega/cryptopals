@@ -2,20 +2,16 @@ use std::fs::File;
 use std::path::Path;
 use std::io::BufRead;
 use std::io::BufReader;
-use base64::decode;
 
-pub fn read_file(path: &Path) -> Vec<u8> {
+
+pub fn read_file(path: &Path) -> String {
     let content = read_lines(path)
         .iter()
         .fold(String::new(), |mut content, ref line| {
             content.push_str(line);
             content
         });
-  
-    match decode(&content) {
-        Err(_) => Vec::new(),
-        Ok(content) => content 
-    }
+    content
 }
 
 pub fn read_lines(path: &Path) -> Vec<String> {

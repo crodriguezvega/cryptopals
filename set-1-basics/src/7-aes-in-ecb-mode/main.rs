@@ -1,6 +1,7 @@
-extern crate crypto;
+extern crate base64;
 extern crate shared;
 
+use base64::decode;
 use std::path::Path;
 use shared::file;
 mod lib;
@@ -13,10 +14,15 @@ fn main() {
     } else if !key.is_ascii() {
         println!("Key is not valid ASCII");
     } else {
-        let cipher_text = file::read_file(path);
-        match lib::decrypt(&cipher_text, &key) {
+        let content = file::read_file(path);
+        let cipher_bytes = match decode(&content) {
+            Err(_) => Vec::new(),
+            Ok(cipher_bytes) => cipher_bytes
+        };
+
+        match lib::decrypt(&cipher_bytes, &key) {
             Err(error) => println!("{}", error),
             Ok(plain_text) => println!("{}", plain_text)
-        }
-    };
+        }    
+    }
 }

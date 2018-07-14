@@ -1,5 +1,7 @@
 extern crate shared;
+extern crate base64;
 
+use base64::decode;
 use std::path::Path;
 use shared::file;
 mod lib;
@@ -9,10 +11,15 @@ fn main() {
     if !path.exists() {
         println!("File not found");
     } else {
-        let cipher_text = file::read_file(path);
-        match lib::break_encryption(&cipher_text) {
+        let content = file::read_file(path);
+        let cipher_bytes = match decode(&content) {
+            Err(_) => Vec::new(),
+            Ok(cipher_bytes) => cipher_bytes
+        };
+
+        match lib::break_encryption(&cipher_bytes) {
             Err(error) => println!("{}", error),
-            Ok(cipher_text) => println!("{}", cipher_text)
+            Ok(plain_text) => println!("{}", plain_text)
         }
     }
 }

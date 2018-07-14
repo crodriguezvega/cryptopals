@@ -1,11 +1,15 @@
 [package]
-name = "set-2-block-crypto"
+name = "cryptopal-set-2"
 version = "0.1.0"
 authors = ["Carlos Rodriguez"]
 
 [[bin]]
 name = "challenge-9"
 path = "src/9-implement-pkcs7-padding/main.rs"
+
+[[bin]]
+name = "challenge-10"
+path = "src/10-implement-cbc-mode/main.rs"
 
 [dependencies]
 shared = { path = "../shared" }

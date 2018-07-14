@@ -21,8 +21,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "cryptopals-set-1"
 version = "0.1.0"
 dependencies = [
+ "base64 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "itertools 0.7.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "rust-crypto 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
  "shared 0.1.0",
 ]
 
@@ -114,7 +114,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "shared"
 version = "0.1.0"
 dependencies = [
- "base64 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rust-crypto 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
