@@ -50,3 +50,25 @@ pub fn ecb_encrypt(plain_text: &[u8], key: &[u8]) -> Result<Vec<u8>, &'static st
 
     Ok(cipher_text)
 }
+
+pub fn cbc_decrypt(cipher_text: &[u8], key: &[u8], iv: &[u8]) -> Result<Vec<u8>, &'static str> {
+    let mut xor_vector = iv;
+    let mut plain_text = Vec::<u8>::new();
+
+    for chunk in cipher_text.chunks(16) {
+        let plain_text_block = match ecb_decrypt(chunk, key) {
+            Err(error) => return Err(error),
+            Ok(result) => {
+                result.iter()
+                    .zip(xor_vector)
+                    .map(|(x, y)| x ^ y)
+                    .collect::<Vec<u8>>()
+            }
+        };
+
+        plain_text.extend(plain_text_block);
+        xor_vector = &chunk;
+    }
+  
+    Ok(plain_text)
+}

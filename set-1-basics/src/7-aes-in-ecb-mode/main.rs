@@ -1,8 +1,8 @@
 extern crate base64;
 extern crate shared;
 
-use base64::decode;
 use std::path::Path;
+use base64::decode;
 use shared::file;
 mod lib;
 
