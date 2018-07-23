@@ -3,7 +3,6 @@ use std::path::Path;
 use std::io::BufRead;
 use std::io::BufReader;
 
-
 pub fn read_file(path: &Path) -> String {
     let content = read_lines(path)
         .iter()

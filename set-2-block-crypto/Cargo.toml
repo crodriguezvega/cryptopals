@@ -11,6 +11,12 @@ path = "src/9-implement-pkcs7-padding/main.rs"
 name = "challenge-10"
 path = "src/10-implement-cbc-mode/main.rs"
 
+[[bin]]
+name = "challenge-11"
+path = "src/11-an-ecb-cbc-detection-oracle/main.rs"
+
 [dependencies]
 base64 = "~0.6.0"
+rand = "0.5"
+itertools = "0.7.3"
 shared = { path = "../shared" }
