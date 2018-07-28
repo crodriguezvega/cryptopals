@@ -57,9 +57,8 @@ pub fn detect_aes_mode(cipher_text: &[u8]) -> AesMode {
 
 fn generate_random_vector() -> Vec<u8> {
     let mut rng = thread_rng();
-
     let length = rng.gen_range(5, 11);
     let mut vector = vec!(0; length);
-    thread_rng().fill(&mut vector[..]);
+    rng.fill(&mut vector[..]);
     vector
 }
