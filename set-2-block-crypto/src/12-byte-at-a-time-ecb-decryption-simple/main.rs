@@ -7,6 +7,8 @@ use rand::{ thread_rng, Rng };
 use base64::decode;
 mod lib;
 
+// https://crypto.stackexchange.com/questions/42891/chosen-plaintext-attack-on-aes-in-ecb-mode
+
 fn main() {    
     let mut rng = thread_rng();
     let key: [u8; 16] = rng.gen();
