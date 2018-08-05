@@ -5,6 +5,7 @@ extern crate shared;
 
 use rand::{ thread_rng, Rng };
 use base64::decode;
+use lib::EncryptionOracle;
 mod lib;
 
 // https://crypto.stackexchange.com/questions/42891/chosen-plaintext-attack-on-aes-in-ecb-mode
@@ -22,7 +23,12 @@ dXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK");
         Ok(unknown_bytes) => unknown_bytes
     };
 
-    match lib::decrypt(&unknown_bytes, &key) {
+    let encryption_oracle = EncryptionOracle {
+        key: &key,
+        unknown_bytes: &unknown_bytes
+    };
+
+    match lib::byte_at_a_time_decrypt(&encryption_oracle) {
         Err(error) => println!("{}", error),
         Ok(plain_text) => println!("{}", plain_text)
     }
