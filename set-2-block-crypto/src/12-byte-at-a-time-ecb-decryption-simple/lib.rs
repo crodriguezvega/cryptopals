@@ -11,11 +11,7 @@ impl<'a> EncryptionOracle<'a> {
     pub fn encrypt(&self, known_bytes: &[u8]) -> Result<Vec<u8>, &'static str> {
         let input = [&known_bytes[..], &self.unknown_bytes[..]].concat();  
         let padded_input = pkcs7::pad(&input, 16);
-
-        match aes::ecb_encrypt(&padded_input, &self.key) {
-            Err(error) => Err(error),
-            Ok(cipher_text) => Ok(cipher_text)
-        }
+        aes::ecb_encrypt(&padded_input, &self.key)
     }
 }
 
